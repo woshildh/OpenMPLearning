@@ -16,7 +16,8 @@
   |shedule(kind[,chunk_size])|见 使用方式8 | 无 |
   |omp_set_nested(bool) | 设置是否允许嵌套并行，默认为 false，已经被废除，可以用omp_set_max_active_levels代替| 无|  
   |omp_set_max_active_levels(int)| 设置允许并行嵌套的最大层数| 无|  
-  更多函数见 https://blog.csdn.net/qq_23858785/article/details/97105972
+  
+更多函数见 https://blog.csdn.net/qq_23858785/article/details/97105972
   
 3.使用方式\
 &nbsp;&nbsp;&nbsp; 1). 并行运行代码块中的内容
