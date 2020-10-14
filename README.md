@@ -14,7 +14,10 @@
   | private(i,j,k) | 定义omp私有的变量，内部改变之后，外部不会被改变，与 #pragma omp parallel (for) 一起用, 不会被初始化, 只能被传入外部以及定义的变量|无| 
   | reduction(operation:variable) | 见 使用方式7 | 无 | 
   |shedule(kind[,chunk_size])|见 使用方式8 | 无 |
-
+  |omp_set_nested(bool) | 设置是否允许嵌套并行，默认为 false，已经被废除，可以用omp_set_max_active_levels代替| 无|  
+  |omp_set_max_active_levels(int)| 设置允许并行嵌套的最大层数| 无|  
+  更多函数见 https://blog.csdn.net/qq_23858785/article/details/97105972
+  
 3.使用方式\
 &nbsp;&nbsp;&nbsp; 1). 并行运行代码块中的内容
       
@@ -130,6 +133,23 @@ parallel for 实现数据并行，parallel sections 实现功能并行。
 
 } 
 ```
-&nbsp;&nbsp;&nbsp; 10). 注意事项
+
+&nbsp;&nbsp;&nbsp; 9). 嵌套并行\
+并行区域嵌套出现在当线程已经运行在并行区域又遇到另一个并行区域的时候，如果嵌套处于允许状态，
+那么就根据动态线程的规则生成一个新的线程组，相反的，线程组就只有单独的一个线程。
+```
+#pragma omp parallel num_threads(i)
+{
+#pragma omp parallel num_threads(j)
+    {
+        ...
+    }
+}
+```
+在上面的代码中，如果已经通过 omp_set_nested(true) 或者 
+omp_set_max_active_levels(2)允许两层的嵌套并行 ，那么将会执行 i * j次并行。
+omp_get_thread_num() 和 omp_get_num_threads()获取的是**最内层**的线程组信息。
+
+3. 注意事项\
 * 循环依赖。parallel 多个线程并行执行时，要让各个线程的数据和功能相互独立，一旦有依赖，会产生错误。
 * 调试。在openmp并行程序中调试时，建议使用 printf进行输出，使用cout进行输出可能会不同线程的输出混杂。
