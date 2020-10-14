@@ -1,4 +1,4 @@
-OpenMP 学习教程
+## OpenMP 学习教程
 
 1. OpenMP 介绍与安装
   无
