@@ -13,6 +13,7 @@ OpenMP 学习教程
   | private(i,j,k) | 定义omp私有的变量，内部改变之后，外部不会被改变，与 #pragma omp parallel (for) 一起用, 不会被初始化, 只能被传入外部以及定义的变量|无| 
   | reduction(operation:variable) | 见 使用方式7 | 无 | 
   |shedule(kind[,chunk_size])|见 使用方式8 | 无 |
+
 3.使用方式\
 &nbsp;&nbsp;&nbsp; 1). 并行运行代码块中的内容
       
